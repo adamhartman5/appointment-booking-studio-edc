@@ -1,0 +1,46 @@
+// use prisma-8
+
+// Define your Project models here.
+enum AppointmentStatus {
+  Booked
+  Cancelled
+}
+
+model Calendar {
+  id            Int             @id @default(autoincrement())
+  appointment   Appointment[]
+}
+
+model Appointment {
+  id          Int                 @id @default(autoincrement())
+  status      AppointmentStatus   @default(Booked)
+  slotId      Int
+  serviceId   Int
+  customerId  Int
+  calendarId  Int
+  slot        Slot                @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  service     Service             @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  customer    Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  calendar    Calendar            @relation(fields: [calendarId], references: [id], onDelete: Cascade)
+}
+
+model Slot {
+  id            Int             @id @default(autoincrement())
+  startTime     DateTime
+  endTime       DateTime
+  appointment   Appointment[]
+}
+
+model Service {
+  id            Int             @id @default(autoincrement())
+  name          String
+  appointment   Appointment[]
+}
+
+model Customer {
+  id            Int             @id @default(autoincrement())
+  name          String
+  email         String
+  phone         Int
+  appointment   Appointment[]
+}
