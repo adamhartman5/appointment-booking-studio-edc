@@ -249,7 +249,7 @@
               "phone": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/int4@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               }
@@ -629,8 +629,8 @@
                   "nullable": false
                 },
                 "phone": {
-                  "codecId": "pg/int4@1",
-                  "dataType": "pg/int4",
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
                   "nullable": false
                 }
               },
@@ -721,7 +721,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "6a5afe07e2cb42417c2e99cfaccb810ad2c07e10294bdaf508d48bbcce474a06"
+    "storageHash": "b2e19bb3f5b406c2f4d5f3a3ae0998d2e30e2289de6d10f01b3eaa5c2791f9ed"
   },
   "capabilities": {
     "postgres": {

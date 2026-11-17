@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 3000",
     "build": "vite build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed": "node scripts/seed.mjs"
   },
   "dependencies": {
     "@prisma/orm-postgres": "8.0.0-rc.22",

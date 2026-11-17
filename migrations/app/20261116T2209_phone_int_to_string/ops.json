@@ -1,0 +1,52 @@
+[
+  {
+    "id": "alterType.Customer.phone",
+    "label": "Alter type of \"Customer\".\"phone\" to text",
+    "operationClass": "widening",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "column",
+        "name": "phone",
+        "table": "Customer"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure column \"phone\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"information_schema\".\"columns\" WHERE (\"table_schema\" = $1 AND \"table_name\" = $2 AND \"column_name\" = $3)) AS \"result\"",
+        "params": [
+          "public",
+          "Customer",
+          "phone"
+        ],
+        "expectation": {
+          "expects": "present",
+          "object": "column \"phone\" on \"Customer\""
+        }
+      }
+    ],
+    "execute": [
+      {
+        "description": "alter type of \"phone\" to text",
+        "sql": "ALTER TABLE \"public\".\"Customer\" ALTER COLUMN \"phone\" TYPE text USING \"phone\"::text"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify column \"phone\" has type \"text\"",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_attribute\" AS \"a\" INNER JOIN \"pg_class\" AS \"c\" ON \"c\".\"oid\" = \"a\".\"attrelid\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"relnamespace\" WHERE (\"n\".\"nspname\" = $1 AND \"c\".\"relname\" = $2 AND \"a\".\"attname\" = $3 AND (format_type(\"a\".\"atttypid\", \"a\".\"atttypmod\")) = $4 AND NOT (\"a\".\"attisdropped\"))) AS \"result\"",
+        "params": [
+          "public",
+          "Customer",
+          "phone",
+          "text"
+        ]
+      }
+    ],
+    "meta": {
+      "warning": "TABLE_REWRITE"
+    }
+  }
+]
